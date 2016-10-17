@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jhon.smiserviciostablet.LoginActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@color/blackSmi"
+                android:src="@drawable/logo_smi_servicios"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".30"
+                android:orientation="vertical"
+                android:background="@color/yellowSmi"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Iniciar Sesión"
+                    android:gravity="center"
+                    android:textSize="@dimen/big_letter"
+                    android:padding="@dimen/big_padding"
+                    android:textColor="#000000"
+                    android:layout_marginTop="@dimen/big_margin"
+                    />
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/login_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/mediumpadding"
+                    android:layout_marginLeft="@dimen/margin_fields_login"
+                    android:layout_marginRight="@dimen/margin_fields_login"
+                    >
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Correo Electronico"
+                        android:gravity="center"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/login_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/mediumpadding"
+                    android:layout_marginLeft="@dimen/margin_fields_login"
+                    android:layout_marginRight="@dimen/margin_fields_login"
+                    >
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/password"
+                        android:gravity="center"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/login_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acceder"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:background="@color/greyButtons"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/top_button_login"
+                    />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/login_sigin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="¿No tienes una cuenta?"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:padding="@dimen/mediumpadding"
+                android:background="@color/yellowSmi"
+                />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
