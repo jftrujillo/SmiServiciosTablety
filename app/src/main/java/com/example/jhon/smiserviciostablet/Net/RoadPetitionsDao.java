@@ -63,6 +63,31 @@ public class RoadPetitionsDao {
         }.execute();
     }
 
+    public void getRoadPetitionById(final String id){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    mList = mTable.where().field("id").eq(id).execute().get();
+                } catch (InterruptedException e) {
+                    queryInterfaceRoadPetitions.OnQueryFinishRoad(INSERT_FAILED,null);
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                    queryInterfaceRoadPetitions.OnQueryFinishRoad(INSERT_FAILED,null);
+            }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                queryInterfaceRoadPetitions.OnQueryFinishRoad(INSERT_CORRECT,mList);
+            }
+        }.execute();
+
+    }
+
     public void updatePetition(final Roadpetitions roadPetitions,final int pos) {
         new AsyncTask<Void, Void, Void>() {
             @Override

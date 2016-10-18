@@ -1,5 +1,7 @@
 package com.example.jhon.smiserviciostablet;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import com.example.jhon.smiserviciostablet.Models.driverpetitions;
 import com.example.jhon.smiserviciostablet.Net.DriverPetitionsDao;
 import com.example.jhon.smiserviciostablet.Net.HomePetitionsDao;
 import com.example.jhon.smiserviciostablet.Net.UsersDao;
+import com.example.jhon.smiserviciostablet.Util.Constants;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
@@ -41,12 +44,13 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
     List<driverpetitions> data;
     List<DriverUserPetition> dataAdapter;
     ListDriverPetitionsAdapter adapter;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_services);
-        setContentView(R.layout.activity_home_petitions);
+        progressDialog = ProgressDialog.show(this,"Sincronizando informacion","Por favor espere",true,false);
         data = new ArrayList<>();
         dataUsers = new ArrayList<>();
         dataAdapter = new ArrayList<>();
@@ -73,7 +77,6 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
         collapse = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapse.setTitle("Administrador");
         collapse.setExpandedTitleColor(getResources().getColor(android.R.color.white));
-
     }
 
     @Override
@@ -88,6 +91,7 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
             }
             adapter = new ListDriverPetitionsAdapter(dataAdapter,this,null,this);
             listView.setAdapter(adapter);
+            progressDialog.dismiss();
         }
     }
 
@@ -104,6 +108,11 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
         if (state == HomePetitionsDao.INSERT_CORRECT){
             dataAdapter.remove(i);
             adapter.notifyDataSetChanged();
+            progressDialog.dismiss();
+        }
+        else {
+            Toast.makeText(this, "Error al actualizar la peticion", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         }
     }
 
@@ -114,13 +123,17 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
 
     @Override
     public void OnButtonClickListener(int type, DriverUserPetition data, int pos) {
+        progressDialog = ProgressDialog.show(this,"Actualizando orden","Por favor espere",true,false);
         switch (type){
             case ListHomePetitionsAdapter.ACEPTAR:
-                data.getDriverpetitions1().setState(1);
-                driverPetitionsDao.updatePetition(data.getDriverpetitions1(),pos);
+                Intent intent = new Intent(this,AddAsistenceActivity.class);
+                intent.putExtra(Constants.KIND_PETITION,Constants.DRIVER_PETITION);
+                intent.putExtra(Constants.ID_PETITION,data.getDriverpetitions1().getId());
+                startActivity(intent);
                 break;
             case ListHomePetitionsAdapter.RECHAZAR:
-                data.getDriverpetitions1().setState(1);
+                progressDialog = ProgressDialog.show(this,"Rechazando Solicitud","Por favor espera",true,false);
+                data.getDriverpetitions1().setState(2);
                 driverPetitionsDao.updatePetition(data.getDriverpetitions1(),pos);
                 break;
 

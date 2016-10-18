@@ -65,6 +65,31 @@ public class HomePetitionsDao {
         }.execute();
     }
 
+    public void getHomePetitionByID(final String id){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                try {
+                    mList = mTable.where().field("id").eq(id).execute().get();
+                } catch (InterruptedException e) {
+                    queryInterfaceHomePetitions.OnQueryFinishHome(INSERT_FAILED,null);
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                    queryInterfaceHomePetitions.OnQueryFinishHome(INSERT_FAILED,null);
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                queryInterfaceHomePetitions.OnQueryFinishHome(INSERT_CORRECT,mList);
+            }
+        }.execute();
+    }
+
     public void updatePetition(final Homepetitions homepetitions){
         new AsyncTask<Void, Void, Void>() {
             @Override

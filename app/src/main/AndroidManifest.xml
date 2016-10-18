@@ -21,7 +21,8 @@
         <activity android:name=".UsersListActivity" />
         <activity android:name=".HomePetitionsActivity" />
         <activity android:name=".RoadPetitionsAcitivity" />
-        <activity android:name=".DriverServicesActivity"></activity>
+        <activity android:name=".DriverServicesActivity" />
+        <activity android:name=".AddAsistenceActivity"></activity>
     </application>
 
 </manifest>

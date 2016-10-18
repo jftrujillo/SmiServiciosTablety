@@ -18,6 +18,16 @@ public class driverpetitions {
     String userid;
     String code;
     String date;
+    String support_person;
+
+    public String getSupport_person() {
+        return support_person;
+    }
+
+    public void setSupport_person(String support_person) {
+        this.support_person = support_person;
+    }
+
     //region Getters and Setters
 
 

@@ -64,6 +64,32 @@ public class DriverPetitionsDao {
         }.execute();
     }
 
+    public void getDriverPetitionById(final String id){
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    mList = mTable.where().field("id").eq(id).execute().get();
+                } catch (InterruptedException e) {
+                    queryInterfaceDriverPetitions.OnQueryFinishDriver(INSERT_FAILED, null);
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    queryInterfaceDriverPetitions.OnQueryFinishDriver(INSERT_FAILED, null);
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                queryInterfaceDriverPetitions.OnQueryFinishDriver(INSERT_CORRECT, mList);
+            }
+        }.execute();
+
+    }
+
     public void updatePetition(final driverpetitions homepetitions,final int pos) {
         new AsyncTask<Void, Void, Void>() {
             @Override

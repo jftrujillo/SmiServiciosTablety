@@ -1,5 +1,7 @@
 package com.example.jhon.smiserviciostablet;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.example.jhon.smiserviciostablet.Models.driverpetitions;
 import com.example.jhon.smiserviciostablet.Net.DriverPetitionsDao;
 import com.example.jhon.smiserviciostablet.Net.RoadPetitionsDao;
 import com.example.jhon.smiserviciostablet.Net.UsersDao;
+import com.example.jhon.smiserviciostablet.Util.Constants;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
@@ -45,6 +48,7 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
     List<Roadpetitions> data;
     List<RoadUserPetition> dataAdapter;
     ListRoadPetitionsAdapter adapter;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +97,7 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
 
     @Override
     public void OnUpdateFinishRoad(int state, String e, Roadpetitions roadpetitions, int i) {
-
+        progressDialog.dismiss();
     }
 
     @Override
@@ -118,6 +122,19 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
 
     @Override
     public void OnButtonClickListener(int type, RoadUserPetition data, int pos) {
+        switch (type){
+            case ListHomePetitionsAdapter.ACEPTAR:
+                Intent intent = new Intent(this,AddAsistenceActivity.class);
+                intent.putExtra(Constants.KIND_PETITION,Constants.HOME_PETITION);
+                intent.putExtra(Constants.ID_PETITION,data.getRoadpetitions().getId());
+                startActivity(intent);
+                break;
+            case ListHomePetitionsAdapter.RECHAZAR:
+                progressDialog = ProgressDialog.show(this,"Rechazando peticion","Por favor espere un momento",true,false);
+                data.getRoadpetitions().setState(2);
+                roadPetitions.updatePetition(data.getRoadpetitions(),pos);
+                break;
 
+        }
     }
 }

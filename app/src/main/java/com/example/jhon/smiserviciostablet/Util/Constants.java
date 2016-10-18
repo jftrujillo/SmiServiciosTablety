@@ -23,6 +23,11 @@ public class Constants {
     public static final String SERVICE_ID = "service_id";
     public static final String SERVICE_NAME = "service_name";
     public static final String SERVICE_IMG_URL = "img_url";
+    public static final int DRIVER_PETITION = 0;
+    public static final int HOME_PETITION = 1;
+    public static final int ROAD_PETITION = 2;
+    public static final String KIND_PETITION = "kind_petition";
+    public static final String ID_PETITION = "idPetition";
 
 
 

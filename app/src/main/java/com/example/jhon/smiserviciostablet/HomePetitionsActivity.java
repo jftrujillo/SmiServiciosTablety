@@ -1,5 +1,7 @@
 package com.example.jhon.smiserviciostablet;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import com.example.jhon.smiserviciostablet.Models.Homepetitions;
 import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.Net.HomePetitionsDao;
 import com.example.jhon.smiserviciostablet.Net.UsersDao;
+import com.example.jhon.smiserviciostablet.Util.Constants;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
@@ -35,6 +38,7 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
     List<Users> dataUsers;
     List<Homepetitions> data;
     ListHomePetitionsAdapter adapter;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,10 +99,13 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
     public void OnButtonClickListener(int type, Homepetitions homepetitions, int i) {
         switch (type){
             case ListHomePetitionsAdapter.ACEPTAR:
-                homepetitions.setState(1);
-                homePetitionsDao.updatePetition(homepetitions);
+                Intent intent = new Intent(this,AddAsistenceActivity.class);
+                intent.putExtra(Constants.KIND_PETITION,Constants.HOME_PETITION);
+                intent.putExtra(Constants.ID_PETITION,homepetitions.getId());
+                startActivity(intent);
                 break;
             case ListHomePetitionsAdapter.RECHAZAR:
+                progressDialog = ProgressDialog.show(this,"Rechazando peticion","Por favor espere un momento",true,false);
                 homepetitions.setState(2);
                 homePetitionsDao.updatePetition(homepetitions);
                 break;
@@ -112,6 +119,7 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
 
     @Override
     public void OnUpdateFinishHome(int state, String e,Homepetitions homepetitions, int i) {
+        progressDialog.dismiss();
         if (state == HomePetitionsDao.INSERT_CORRECT){
             data.remove(homepetitions);
             for (Homepetitions homepetitionsdata : data) {
