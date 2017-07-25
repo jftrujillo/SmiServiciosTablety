@@ -10,12 +10,14 @@ public class Users {
     String cellphone;
     String mail;
     String id;
-    String address;
-    String gender;
+    String adress;
+    String genre;
     String age;
     int type;
     String password;
     int isvalid;
+    String promocion;
+
 
     public int isvalid() {
         return isvalid;
@@ -28,6 +30,18 @@ public class Users {
     //region getters and setters
     public String getId() {
         return id;
+    }
+
+    public int getIsvalid() {
+        return isvalid;
+    }
+
+    public String getPromocion() {
+        return promocion;
+    }
+
+    public void setPromocion(String promocion) {
+        this.promocion = promocion;
     }
 
     public void setId(String id) {
@@ -90,20 +104,20 @@ public class Users {
         this.cellphone = cellphone;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
-    public String getGender() {
-        return gender;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getAge() {

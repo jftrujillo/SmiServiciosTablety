@@ -6,6 +6,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import com.example.jhon.smiserviciostablet.Models.Roadpetitions;
 import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.Models.driverpetitions;
 import com.example.jhon.smiserviciostablet.Net.DriverPetitionsDao;
+import com.example.jhon.smiserviciostablet.Net.HomePetitionsDao;
 import com.example.jhon.smiserviciostablet.Net.RoadPetitionsDao;
 import com.example.jhon.smiserviciostablet.Net.UsersDao;
 import com.example.jhon.smiserviciostablet.Util.Constants;
@@ -35,7 +38,7 @@ import java.util.List;
 
 
 
-public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPetitionsDao.QueryInterfaceRoadPetitions, RoadPetitionsDao.UpdateRoadPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface, ListRoadPetitionsAdapter.RoadpetitionsInterface {
+public class    RoadPetitionsAcitivity extends AppCompatActivity implements RoadPetitionsDao.QueryInterfaceRoadPetitions, RoadPetitionsDao.UpdateRoadPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface, ListRoadPetitionsAdapter.RoadpetitionsInterface, AdapterView.OnItemClickListener {
     Toolbar toobar;
     CollapsingToolbarLayout collapse;
     ListView listView;
@@ -60,7 +63,7 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
         data = new ArrayList<>();
         dataUsers = new ArrayList<>();
         dataAdapter = new ArrayList<>();
-
+        progressDialog = ProgressDialog.show(this,"Sincronizando informacion","Por favor espere",true,false);
         try {
             mClient = new MobileServiceClient("https://smiserviciosmovil.azure-mobile.net/",
                     "qIufyUhXNGYkLUXenUUDufQFPMdcUm65",
@@ -69,7 +72,12 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
             mTableUsers = mClient.getTable(Roadpetitions.class);
             roadPetitions = new RoadPetitionsDao(mClient,this,this);
             usersDao = new UsersDao(mClient,this,this);
-            roadPetitions.getAllRoadPetitions();
+            if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.NORMAL_INTENT) {
+                roadPetitions.getAllRoadPetitions();
+            }
+            else if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.TAKEN_INTENT  ){
+                roadPetitions.getTakenRoadPetitions();
+            }
 
         } catch (MalformedURLException e) {
             Toast.makeText(this,"No fue posible conectar con la base de datos",Toast.LENGTH_SHORT).show();
@@ -77,12 +85,13 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
 
         toobar = (Toolbar) findViewById(R.id.toolbar);
         listView = (ListView) findViewById(R.id.list_view);
+        listView.setOnItemClickListener(this);
         setSupportActionBar(toobar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Peticiones de Conductor");
         collapse = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapse.setTitle("Administrador");
-        collapse.setExpandedTitleColor(getResources().getColor(android.R.color.white));
+        collapse.setTitle("Peticiones de Asistencia vial");
+        collapse.setExpandedTitleColor(getResources().getColor(android.R.color.black));
 
     }
 
@@ -93,16 +102,40 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
         for (Roadpetitions roadpetitions : data) {
             usersDao.getUserById(roadpetitions.getUserid());
         }
+        if (list.size() == 0){
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void OnUpdateFinishRoad(int state, String e, Roadpetitions roadpetitions, int i) {
-        progressDialog.dismiss();
+        if (state == HomePetitionsDao.INSERT_CORRECT) {
+            Intent in = new Intent(Intent.ACTION_SEND);
+            in.setType("message/rfc822");
+            in.putExtra(Intent.EXTRA_EMAIL, new String[]{dataUsers.get(i).getMail()});
+            in.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Rechazada");
+            in.putExtra(Intent.EXTRA_TEXT, Constants.REFUSE_EMAIL);
+            dataAdapter.remove(i);
+            adapter.notifyDataSetChanged();
+            progressDialog.dismiss();
+            try {
+                startActivity(Intent.createChooser(in, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "No hay clientes de correo, por favor instale uno.", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            Toast.makeText(this, "Error al actualizar la peticion", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void OnQueryFinish(int state, MobileServiceList<Users> list) {
-        dataUsers.add(list.get(0));
+        if (list.size() > 0 ) {
+            dataUsers.add(list.get(0));
+        }
+
         if (dataUsers.size() == data.size()) {
             for (int i = 0; i < data.size(); i++) {
                 RoadUserPetition roadUser = new RoadUserPetition();
@@ -112,6 +145,7 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
             }
             adapter = new ListRoadPetitionsAdapter(dataAdapter, this, null, this);
             listView.setAdapter(adapter);
+            progressDialog.dismiss();
         }
     }
 
@@ -125,7 +159,7 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
         switch (type){
             case ListHomePetitionsAdapter.ACEPTAR:
                 Intent intent = new Intent(this,AddAsistenceActivity.class);
-                intent.putExtra(Constants.KIND_PETITION,Constants.HOME_PETITION);
+                intent.putExtra(Constants.KIND_PETITION,Constants.ROAD_PETITION);
                 intent.putExtra(Constants.ID_PETITION,data.getRoadpetitions().getId());
                 startActivity(intent);
                 break;
@@ -136,5 +170,10 @@ public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPet
                 break;
 
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(new Intent(this,RoadPetitionDetailActivity.class).putExtra(Constants.ID_PETITION,data.get(position).getId()).putExtra(Constants.ID_USER,dataUsers.get(position).getId()));
     }
 }

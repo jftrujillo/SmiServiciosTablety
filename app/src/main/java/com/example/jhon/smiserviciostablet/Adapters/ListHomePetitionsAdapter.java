@@ -82,12 +82,29 @@ public class ListHomePetitionsAdapter extends BaseAdapter {
                 homePetitionsInterface.OnButtonClickListener(RECHAZAR,data.get(i),i);
             }
         });
+
+        TextView textoUno,textoDos,textoTres,textCuatro,textoCinco,textoSeis;
+        textoUno = (TextView) v.findViewById(R.id.text1);
+        textoDos = (TextView) v.findViewById(R.id.text2);
+        textoTres = (TextView) v.findViewById(R.id.text3);
+        textCuatro = (TextView) v.findViewById(R.id.text4);
+        textoCinco = (TextView) v.findViewById(R.id.text5);
+        textoSeis = (TextView) v.findViewById(R.id.text6);
+
+
         nombre.setText(data.get(i).getServicename());
         direccion.setText(data.get(i).getAddress());
         email.setText(data.get(i).getRandomcode());
-        telefono.setText(data.get(i).getRandomcode());
+        telefono.setText(data.get(i).getDescription());
         genero.setText(dataUser.get(i).getName());
         cedula.setText(dataUser.get(i).getIdentifycard());
+
+        textoUno.setText("Cedula");
+        textoDos.setText("Servicio");
+        textoTres.setText("Descripción");
+        textCuatro.setText("Codigo Aleatorio");
+        textoCinco.setText("Direección");
+        textoSeis.setText("Nombre");
         return v;
     }
 }

@@ -5,10 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.R;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -20,8 +23,12 @@ public class ListUserAdapter extends BaseAdapter {
     List<Users> data;
     Context context;
     OnButtonClickListener onButtonClickListener;
+    int type;
     public static final int ACEPTAR = 0;
     public static final int RECHAZAR = 1;
+    public static final int TYPE_ALL = 0;
+    public static final int TYPE_AVALIABLE = 1;
+
 
 
 
@@ -29,10 +36,11 @@ public class ListUserAdapter extends BaseAdapter {
         void OnButtonclick(int type, Users users);
     }
 
-    public ListUserAdapter(List<Users> data, Context context, OnButtonClickListener onButtonClickListener) {
+    public ListUserAdapter(List<Users> data, Context context, OnButtonClickListener onButtonClickListener,int type) {
         this.data = data;
         this.context = context;
         this.onButtonClickListener = onButtonClickListener;
+        this.type = type;
     }
 
 
@@ -57,11 +65,15 @@ public class ListUserAdapter extends BaseAdapter {
         if (view == null){
             v = View.inflate(context, R.layout.users_list_template,null);
         }
+        LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.promocion_linear);
+        linearLayout.setVisibility(View.VISIBLE);
+        TextView textPromocion = (TextView) v.findViewById(R.id.promocion);
         TextView nombre = (TextView) v.findViewById(R.id.nombre);
         TextView direccion = (TextView) v.findViewById(R.id.direccion);
         TextView email = (TextView) v.findViewById(R.id.email);
         TextView telefono = (TextView) v.findViewById(R.id.telefono);
         TextView genero = (TextView) v.findViewById(R.id.genero);
+        TextView cedula = (TextView) v.findViewById(R.id.cedula);
         Button btnAceptar = (Button) v.findViewById(R.id.btn_aceptar);
         Button btnRechazar = (Button) v.findViewById(R.id.btn_rechazar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +89,53 @@ public class ListUserAdapter extends BaseAdapter {
                 onButtonClickListener.OnButtonclick(RECHAZAR,data.get(i));
             }
         });
+        if (type == TYPE_AVALIABLE ){
+            LinearLayout visibilityParent = (LinearLayout) v.findViewById(R.id.linear_visiblitiy);
+            visibilityParent.setVisibility(View.GONE);
+        }
+        TextView textoUno,textoDos,textoTres,textCuatro,textoCinco,textoSeis;
+        textoUno = (TextView) v.findViewById(R.id.text1);
+        textoDos = (TextView) v.findViewById(R.id.text2);
+        textoTres = (TextView) v.findViewById(R.id.text3);
+        textCuatro = (TextView) v.findViewById(R.id.text4);
+        textoCinco = (TextView) v.findViewById(R.id.text5);
+        textoSeis = (TextView) v.findViewById(R.id.text6);
 
-        nombre.setText(data.get(i).getName().toString());
-        direccion.setText(data.get(i).getAddress().toString());
-        email.setText(data.get(i).getMail().toString());
-        telefono.setText(data.get(i).getTelephone().toString());
-        genero.setText(data.get(i).getGender().toString());
+        textoUno.setText("Cedula");
+        textoDos.setText("Nombre");
+        textoTres.setText("Teléfono");
+        textCuatro.setText("Correo electrónico");
+        textoCinco.setText("Dirección");
+        textoSeis.setText("Género");
+
+
+
+        if (data.get(i).getName() != null){
+            nombre.setText(data.get(i).getName().toString());
+        }
+
+        if (data.get(i).getAdress() != null){
+            direccion.setText(data.get(i).getAdress().toString());
+        }
+
+        if (data.get(i).getMail() != null){
+            email.setText(data.get(i).getMail().toString());
+        }
+
+        if (data.get(i).getTelephone() != null){
+            telefono.setText(data.get(i).getTelephone().toString());
+        }
+
+        if (data.get(i).getGenre() != null){
+            genero.setText(data.get(i).getGenre().toString());
+        }
+        if (data.get(i).getIdentifycard() != null){
+            cedula.setText(data.get(i).getIdentifycard());
+        }
+        textPromocion.setText(data.get(i).getPromocion() == null ? "Sin código de promocion"
+        : data.get(i).getPromocion());
+
+
         return v;
     }
 }

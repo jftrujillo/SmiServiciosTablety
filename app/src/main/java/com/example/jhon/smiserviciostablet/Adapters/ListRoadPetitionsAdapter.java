@@ -86,12 +86,29 @@ public class ListRoadPetitionsAdapter extends BaseAdapter{
                 roadPetitionsInterface.OnButtonClickListener(RECHAZAR,data.get(i),i);
             }
         });
+
+        TextView textoUno,textoDos,textoTres,textCuatro,textoCinco,textoSeis;
+        textoUno = (TextView) v.findViewById(R.id.text1);
+        textoDos = (TextView) v.findViewById(R.id.text2);
+        textoTres = (TextView) v.findViewById(R.id.text3);
+        textCuatro = (TextView) v.findViewById(R.id.text4);
+        textoCinco = (TextView) v.findViewById(R.id.text5);
+        textoSeis = (TextView) v.findViewById(R.id.text6);
+
+
         nombre.setText(data.get(i).getRoadpetitions().getServicename());
         direccion.setText(data.get(i).getRoadpetitions().getLatitude());
         email.setText(data.get(i).getRoadpetitions().getLongitude());
         telefono.setText(data.get(i).getRoadpetitions().getRandomcode());
-        genero.setText(data.get(i).getUsers().getGender());
+        genero.setText(data.get(i).getRoadpetitions().getDescription());
         cedula.setText(data.get(i).getUsers().getIdentifycard());
+
+        textoUno.setText("Cedula");
+        textoDos.setText("Servicio");
+        textoTres.setText("Codigo aleatorio");
+        textCuatro.setText("Longitud");
+        textoCinco.setText("Latitud");
+        textoSeis.setText("Género");
         return v;
     }
 }

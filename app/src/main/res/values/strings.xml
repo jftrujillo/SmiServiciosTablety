@@ -6,9 +6,12 @@
     <string name="please_wait">por favor espere</string>
     <string name="check_internet">Por favor verifique su conexino a internet</string>
     <string name="home_asist">Asistencia Hogar</string>
+    <string name="home_asist_taken">Asistencia Hogar Aceptadas</string>
     <string name="way_asist">Asistencia vial</string>
     <string name="choosen_driver">Conductor elegido</string>
+    <string name="choosen_driver_taken">Conductor elegido Tomado</string>
     <string name="road_asistence">Asistencia Vial</string>
+    <string name="road_asistence_taken">Asistencia Vial Tomada</string>
     <string name="actual_direction">¿Donde me recogen?</string>
     <string name="future_direction">¿A donde me llevan?</string>
     <string name="request_button">solicitar</string>

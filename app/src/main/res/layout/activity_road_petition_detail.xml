@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home_petiitions_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.jhon.smiserviciostablet.RoadPetitionDetailActivity"
+    android:background="@color/blackSmi"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
+        android:background="#ffffff"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:text="Peticiones de camino"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre del servicio"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+
+                />
+            <EditText
+                android:inputType="none"
+                android:id="@+id/nombre_servicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Grua"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                android:focusable="false"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dirección"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:focusable="false"
+                android:id="@+id/direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Calle 55 cn"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripción"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:focusable="false"
+                android:id="@+id/descripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Se me daño"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Genero"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="8dp"
+                android:clickable="false"
+                >
+                <RadioButton
+                    android:id="@+id/hombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hombre"
+                    android:textSize="22sp"
+                    android:layout_margin="8dp"
+                    />
+                <RadioButton
+                    android:layout_margin="8dp"
+                    android:id="@+id/mujer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mujer"
+                    android:textSize="22sp"
+                    />
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Codigo Aleatorio"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:focusable="false"
+                android:id="@+id/codigo_aleatorio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1422"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre Cliente"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:id="@+id/nombre_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1422"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cedula"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:focusable="false"
+                android:id="@+id/cedula_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1422"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Correo Electronico"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1422"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                android:focusable="false"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
+

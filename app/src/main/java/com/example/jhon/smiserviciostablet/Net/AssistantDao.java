@@ -40,7 +40,7 @@ public class AssistantDao {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    mList = mTable.where().field("state").eq(0).execute().get();
+                    mList = mTable.where().execute().get();
                 } catch (InterruptedException e) {
                     queryInterfaceAssistant.OnQueryFinishAsistant(INSERT_FAILED, null);
                     e.printStackTrace();

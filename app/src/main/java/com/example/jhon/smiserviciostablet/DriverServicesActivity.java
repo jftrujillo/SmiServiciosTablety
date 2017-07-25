@@ -6,6 +6,9 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,7 +34,7 @@ import java.util.List;
 
 
 
-public class DriverServicesActivity extends AppCompatActivity implements QueryInterface, DriverPetitionsDao.QueryInterfaceDriverPetitions, DriverPetitionsDao.UpdateDriverPetitionsInterface, UsersDao.UsersDaoUpdateInterface, ListDriverPetitionsAdapter.HomePetitionsInterface {
+public class        DriverServicesActivity extends AppCompatActivity implements QueryInterface, DriverPetitionsDao.QueryInterfaceDriverPetitions, DriverPetitionsDao.UpdateDriverPetitionsInterface, UsersDao.UsersDaoUpdateInterface, ListDriverPetitionsAdapter.HomePetitionsInterface, AdapterView.OnItemClickListener {
     Toolbar toobar;
     CollapsingToolbarLayout collapse;
     ListView listView;
@@ -63,7 +66,12 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
             mTableUsers = mClient.getTable(driverpetitions.class);
             driverPetitionsDao = new DriverPetitionsDao(mClient,this,this);
             usersDao = new UsersDao(mClient,this,this);
-            driverPetitionsDao.getAllDriverPetitions();
+            if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.NORMAL_INTENT) {
+                driverPetitionsDao.getAllDriverPetitions();
+            }
+            else if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.TAKEN_INTENT){
+                driverPetitionsDao.getTakenDriverPetitions();
+            }
 
         } catch (MalformedURLException e) {
             Toast.makeText(this,"No fue posible conectar con la base de datos",Toast.LENGTH_SHORT).show();
@@ -71,17 +79,24 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
 
         toobar = (Toolbar) findViewById(R.id.toolbar);
         listView = (ListView) findViewById(R.id.list_view);
+        listView.setOnItemClickListener(this);
         setSupportActionBar(toobar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Peticiones de Conductor");
         collapse = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapse.setTitle("Administrador");
-        collapse.setExpandedTitleColor(getResources().getColor(android.R.color.white));
+        collapse.setTitle("Peticiones de Conductor");
+        collapse.setExpandedTitleColor(getResources().getColor(android.R.color.black));
     }
 
     @Override
     public void OnQueryFinish(int state, MobileServiceList<Users> list) {
-        dataUsers.add(list.get(0));
+        if (list.size() == 0){
+            progressDialog.dismiss();
+        }
+
+        if(list.size() > 0) {
+            dataUsers.add(list.get(0));
+        }
         if (dataUsers.size() == data.size()){
             for (int i = 0; i < data.size(); i++) {
                 DriverUserPetition driverUser = new DriverUserPetition();
@@ -97,6 +112,9 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
 
     @Override
     public void OnQueryFinishDriver(int state, MobileServiceList<driverpetitions> list) {
+        if (list.size() == 0){
+            progressDialog.dismiss();
+        }
         data.addAll(list);
         for (driverpetitions driverpetitions : data) {
             usersDao.getUserById(driverpetitions.getUserid());
@@ -106,9 +124,21 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
     @Override
     public void OnUpdateFinishDriver(int state, String e, driverpetitions homepetitions, int i) {
         if (state == HomePetitionsDao.INSERT_CORRECT){
+            progressDialog.dismiss();
             dataAdapter.remove(i);
             adapter.notifyDataSetChanged();
             progressDialog.dismiss();
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("message/rfc822");
+            intent.putExtra(Intent.EXTRA_EMAIL  , new String[]{dataUsers.get(i).getMail()});
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Rechazada");
+            intent.putExtra(Intent.EXTRA_TEXT   , Constants.REFUSE_EMAIL);
+            try {
+                startActivity(Intent.createChooser(intent, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "No hay clientes de correo, por favor instale uno.", Toast.LENGTH_SHORT).show();
+            }
+
         }
         else {
             Toast.makeText(this, "Error al actualizar la peticion", Toast.LENGTH_SHORT).show();
@@ -123,7 +153,6 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
 
     @Override
     public void OnButtonClickListener(int type, DriverUserPetition data, int pos) {
-        progressDialog = ProgressDialog.show(this,"Actualizando orden","Por favor espere",true,false);
         switch (type){
             case ListHomePetitionsAdapter.ACEPTAR:
                 Intent intent = new Intent(this,AddAsistenceActivity.class);
@@ -132,12 +161,25 @@ public class DriverServicesActivity extends AppCompatActivity implements QueryIn
                 startActivity(intent);
                 break;
             case ListHomePetitionsAdapter.RECHAZAR:
-                progressDialog = ProgressDialog.show(this,"Rechazando Solicitud","Por favor espera",true,false);
                 data.getDriverpetitions1().setState(2);
                 driverPetitionsDao.updatePetition(data.getDriverpetitions1(),pos);
-                break;
-
         }
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(new Intent(this,DriverServicesDetailActivity.class).putExtra(Constants.ID_PETITION,data.get(position).getId()).putExtra(Constants.ID_USER,dataUsers.get(position).getId()));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return true;
 
     }
 }

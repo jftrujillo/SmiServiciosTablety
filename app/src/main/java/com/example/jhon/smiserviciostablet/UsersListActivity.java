@@ -1,6 +1,8 @@
 package com.example.jhon.smiserviciostablet;
 
+import android.app.ProgressDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import com.example.jhon.smiserviciostablet.Adapters.ListUserAdapter;
 import com.example.jhon.smiserviciostablet.Interfaces.QueryInterface;
 import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.Net.UsersDao;
+import com.example.jhon.smiserviciostablet.Util.Constants;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
@@ -30,13 +33,14 @@ public class UsersListActivity extends AppCompatActivity implements QueryInterfa
     MobileServiceTable<Users> mTableUsers;
     MobileServiceList<Users> mList;
     UsersDao usersDao;
-
+    Bundle bundle;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_list);
-
+        bundle = getIntent().getExtras();
         try {
             mClient = new MobileServiceClient("https://smiserviciosmovil.azure-mobile.net/",
                     "qIufyUhXNGYkLUXenUUDufQFPMdcUm65",
@@ -44,7 +48,15 @@ public class UsersListActivity extends AppCompatActivity implements QueryInterfa
 
             mTableUsers = mClient.getTable(Users.class);
             usersDao = new UsersDao(mClient,this,this);
-            usersDao.getAllUsers();
+            progressDialog = ProgressDialog.show(this,"Recuperando datos","Espere por favor",true,false);
+            if (bundle.getBoolean(Constants.IS_ALL_USERS)) {
+                usersDao.getAllUsers();
+            }
+
+            else {
+                usersDao.getAllUsersAvaliable();
+            }
+
 
         } catch (MalformedURLException e) {
             Toast.makeText(this,"No fue posible conectar con la base de datos",Toast.LENGTH_SHORT).show();
@@ -63,10 +75,17 @@ public class UsersListActivity extends AppCompatActivity implements QueryInterfa
 
     @Override
     public void OnQueryFinish(int state, MobileServiceList<Users> list) {
-    if (state == UsersDao.INSERT_CORRECT){
+    progressDialog.dismiss();
+        if (state == UsersDao.INSERT_CORRECT){
         data = new ArrayList<>();
         data.addAll(list);
-        adapter = new ListUserAdapter(data,this,this);
+        if (bundle.getBoolean(Constants.IS_ALL_USERS)) {
+            adapter = new ListUserAdapter(data, this, this,ListUserAdapter.TYPE_ALL);
+        }
+
+        else {
+            adapter = new ListUserAdapter(data, this, this,ListUserAdapter.TYPE_AVALIABLE);
+        }
         listView.setAdapter(adapter);
     }
     }

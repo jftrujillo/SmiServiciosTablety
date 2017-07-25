@@ -63,6 +63,30 @@ public class RoadPetitionsDao {
         }.execute();
     }
 
+    public void getTakenRoadPetitions() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    mList = mTable.where().field("state").eq(1).execute().get();
+                } catch (InterruptedException e) {
+                    queryInterfaceRoadPetitions.OnQueryFinishRoad(INSERT_FAILED, null);
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    queryInterfaceRoadPetitions.OnQueryFinishRoad(INSERT_FAILED, null);
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                queryInterfaceRoadPetitions.OnQueryFinishRoad(INSERT_CORRECT, mList);
+            }
+        }.execute();
+    }
+
     public void getRoadPetitionById(final String id){
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -107,10 +131,8 @@ public class RoadPetitionsDao {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                if (driverpetitions.getState() == 1) {
+                if (driverpetitions.getState() == 1 || driverpetitions.getState() == 2 ) {
                     updateRoadPetitionsInterface.OnUpdateFinishRoad(INSERT_CORRECT, null, roadPetitions, pos);
-                } else if (driverpetitions.getState() == 2) {
-                    updateRoadPetitionsInterface.OnUpdateFinishRoad(INSERT_FAILED, "fallo", null, pos);
                 }
 
                 if (driverpetitions.getState() == 0) {

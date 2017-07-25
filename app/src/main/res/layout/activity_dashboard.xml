@@ -148,8 +148,202 @@
                         />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/client_services_carborrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginTop="18dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/icon1_car"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/circle_shape"
+                        android:src="@drawable/ic_directions_car_black_24dp"
+                        android:padding="8dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        />
 
 
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="Prestamos de carro"
+                        android:gravity="center"
+                        android:textSize="@dimen/medium_letter"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        />
+
+
+
+                </LinearLayout>
+
+
+
+            </TableRow>
+            <TableRow>
+                <LinearLayout
+                    android:id="@+id/client_services_home_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginTop="18dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/icon1_client_services_taken"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/circle_shape"
+                        android:src="@drawable/ic_home_black_24px"
+                        android:padding="8dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        />
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/home_asist_taken"
+                        android:gravity="center"
+                        android:textSize="@dimen/medium_letter"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        />
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/client_services_driver_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_marginTop="18dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/circle_shape"
+                        android:src="@drawable/icon_choosen_driver"
+                        android:padding="8dp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/choosen_driver_taken"
+                        android:gravity="center"
+                        android:textSize="@dimen/medium_letter"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/client_services_roadasistence_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_marginTop="18dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/circle_shape"
+                        android:src="@drawable/road_asisstence_icon"
+                        android:padding="8dp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/road_asistence_taken"
+                        android:gravity="center"
+                        android:textSize="@dimen/medium_letter"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        ></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/client_all_services_users"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_marginTop="18dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/circle_shape"
+                        android:src="@drawable/user_face"
+                        android:padding="8dp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="Todos los usuarios"
+                        android:gravity="center"
+                        android:textSize="@dimen/medium_letter"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/client_services_carborrow_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginTop="18dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/icon1_car_taken"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/circle_shape"
+                        android:src="@drawable/ic_directions_car_black_24dp"
+                        android:padding="8dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        />
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="Prestamos de carro tomadas"
+                        android:gravity="center"
+                        android:textSize="@dimen/medium_letter"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        />
+
+
+
+                </LinearLayout>
 
             </TableRow>
         </TableLayout>

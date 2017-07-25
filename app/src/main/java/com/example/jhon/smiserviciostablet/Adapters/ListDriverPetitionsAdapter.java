@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.jhon.smiserviciostablet.Models.DriverUserPetition;
 import com.example.jhon.smiserviciostablet.Models.driverpetitions;
 import com.example.jhon.smiserviciostablet.Models.Users;
-import com.example.jhon.smiserviciostablet.Net.DriverPetitionsDao;
 import com.example.jhon.smiserviciostablet.R;
 
 import java.util.List;
@@ -83,12 +82,27 @@ public class ListDriverPetitionsAdapter extends BaseAdapter {
                 homePetitionsInterface.OnButtonClickListener(RECHAZAR,data.get(i),i);
             }
         });
-        nombre.setText(data.get(i).getDriverpetitions1().getServicename());
+        TextView textoUno,textoDos,textoTres,textCuatro,textoCinco,textoSeis;
+        textoUno = (TextView) v.findViewById(R.id.text1);
+        textoDos = (TextView) v.findViewById(R.id.text2);
+        textoTres = (TextView) v.findViewById(R.id.text3);
+        textCuatro = (TextView) v.findViewById(R.id.text4);
+        textoCinco = (TextView) v.findViewById(R.id.text5);
+        textoSeis = (TextView) v.findViewById(R.id.text6);
+
+
+        nombre.setText("No definido");
         direccion.setText(data.get(i).getDriverpetitions1().getFutureaddress());
         email.setText(data.get(i).getDriverpetitions1().getActualaddress());
         telefono.setText(data.get(i).getDriverpetitions1().getDate());
-        genero.setText(data.get(i).getUsers().getGender());
+        genero.setText(data.get(i).getUsers().getGenre() );
         cedula.setText(data.get(i).getUsers().getIdentifycard());
+        textoUno.setText("Cedula");
+        textoDos.setText("Servicio");
+        textoTres.setText("Fecha");
+        textCuatro.setText("Dirección inicial");
+        textoCinco.setText("Dirección final");
+        textoSeis.setText("Género");
         return v;
     }
 }

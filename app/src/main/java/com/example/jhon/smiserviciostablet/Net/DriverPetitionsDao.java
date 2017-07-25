@@ -64,6 +64,30 @@ public class DriverPetitionsDao {
         }.execute();
     }
 
+    public void  getTakenDriverPetitions() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    mList = mTable.where().field("state").eq(1).execute().get();
+                } catch (InterruptedException e) {
+                    queryInterfaceDriverPetitions.OnQueryFinishDriver(INSERT_FAILED, null);
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    queryInterfaceDriverPetitions.OnQueryFinishDriver(INSERT_FAILED, null);
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                queryInterfaceDriverPetitions.OnQueryFinishDriver(INSERT_CORRECT, mList);
+            }
+        }.execute();
+    }
+
     public void getDriverPetitionById(final String id){
 
         new AsyncTask<Void, Void, Void>() {
@@ -112,14 +136,12 @@ public class DriverPetitionsDao {
                 if (driverpetitions.getState() == 1) {
                     updateDriverPetitionsInterface.OnUpdateFinishDriver(INSERT_CORRECT, null, driverpetitions, pos);
                 } else if (driverpetitions.getState() == 2) {
-                    updateDriverPetitionsInterface.OnUpdateFinishDriver(INSERT_FAILED, "fallo", null, pos);
+                    updateDriverPetitionsInterface.OnUpdateFinishDriver(INSERT_CORRECT, null, driverpetitions, pos);
                 }
 
                 if (driverpetitions.getState() == 0) {
                     updateDriverPetitionsInterface.OnUpdateFinishDriver(INSERT_FAILED, "fallo", null, pos);
                 }
-
-
             }
         }.execute();
     }

@@ -12,7 +12,6 @@ public class driverpetitions {
     String futureaddress;
     String id;
     String insuranceid;
-    String servicename;
     int state;
     String time;
     String userid;
@@ -76,14 +75,6 @@ public class driverpetitions {
 
     public void setInsuranceid(String insuranceid) {
         this.insuranceid = insuranceid;
-    }
-
-    public String getServicename() {
-        return servicename;
-    }
-
-    public void setServicename(String servicename) {
-        this.servicename = servicename;
     }
 
     public int getState() {

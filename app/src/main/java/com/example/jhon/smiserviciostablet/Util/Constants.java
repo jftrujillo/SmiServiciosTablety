@@ -26,8 +26,14 @@ public class Constants {
     public static final int DRIVER_PETITION = 0;
     public static final int HOME_PETITION = 1;
     public static final int ROAD_PETITION = 2;
+    public static final int CAR_BORROW_PETITION = 3;
     public static final String KIND_PETITION = "kind_petition";
     public static final String ID_PETITION = "idPetition";
+    public static final String ID_USER = "iduser";
+    public static final String EMAIL_USER = "emailUser";
+    public static final String REFUSE_EMAIL = "Le agradecemos por utilizar nuestra aplicaicón, Lamentamos informarle que tu solicitud ha sido rechazada";
+    public static final String IS_ALL_USERS = "is_all_users";
+
 
 
 

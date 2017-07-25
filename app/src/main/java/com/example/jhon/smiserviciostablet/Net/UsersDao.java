@@ -61,6 +61,32 @@ public class UsersDao  {
         }.execute();
     }
 
+    public void getAllUsersAvaliable(){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    mList = mTable.where().field("isvalid").eq(0).or().field("isvalid").eq(1).execute().get();
+                } catch (InterruptedException e) {
+                    queryInterface.OnQueryFinish(INSERT_FAILED,null);
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    queryInterface.OnQueryFinish(INSERT_FAILED,null);
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                queryInterface.OnQueryFinish(INSERT_CORRECT,mList);
+            }
+        }.execute();
+    }
+
+
+
     public void getUserById(final String id){
         new AsyncTask<Void, Void, Void>() {
             @Override
