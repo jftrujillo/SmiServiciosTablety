@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,7 +20,9 @@ import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -76,6 +79,14 @@ public class UsersListActivity extends AppCompatActivity implements QueryInterfa
     @Override
     public void OnQueryFinish(int state, MobileServiceList<Users> list) {
     progressDialog.dismiss();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+        for (Users users : list) {
+            if (users.getCreado() != 0) {
+            Date date = new Date(users.getCreado());
+            String dateString = simpleDateFormat.format(date);
+            Log.i("date", dateString);
+            }
+        }
         if (state == UsersDao.INSERT_CORRECT){
         data = new ArrayList<>();
         data.addAll(list);

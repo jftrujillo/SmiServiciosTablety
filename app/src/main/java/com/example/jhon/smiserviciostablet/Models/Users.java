@@ -1,5 +1,9 @@
 package com.example.jhon.smiserviciostablet.Models;
 
+import com.microsoft.windowsazure.mobileservices.table.DateTimeOffset;
+
+import java.sql.Date;
+
 /**
  * Created by jhon on 25/04/16.
  */
@@ -17,6 +21,8 @@ public class Users {
     String password;
     int isvalid;
     String promocion;
+    String __createdAt;
+    long creado;
 
 
     public int isvalid() {
@@ -28,6 +34,24 @@ public class Users {
     }
 
     //region getters and setters
+
+
+    public long getCreado() {
+        return creado;
+    }
+
+    public void setCreado(long creado) {
+        this.creado = creado;
+    }
+
+    public String get__createdAt() {
+        return __createdAt;
+    }
+
+    public void set__createdAt(String __createdAt) {
+        this.__createdAt = __createdAt;
+    }
+
     public String getId() {
         return id;
     }

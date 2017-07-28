@@ -70,7 +70,7 @@ public class DriverServicesDetailActivity extends AppCompatActivity implements D
     @Override
     public void OnQueryFinishDriver(int state, MobileServiceList<driverpetitions> list) {
         driverpetitions = list.get(0);
-        nombreServicio.setText(driverpetitions.getServicename());
+        nombreServicio.setText("Sin registro");
         direccion.setText("Direccion inicial" + driverpetitions.getActualaddress() + " Direccion de llegada: " + driverpetitions.getFutureaddress());
         descrpipcion.setText(driverpetitions.getDate());
         codigoAleatorio.setText(driverpetitions.getCode());
