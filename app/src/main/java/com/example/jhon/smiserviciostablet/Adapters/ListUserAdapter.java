@@ -13,6 +13,8 @@ import com.example.jhon.smiserviciostablet.R;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -74,6 +76,8 @@ public class ListUserAdapter extends BaseAdapter {
         TextView telefono = (TextView) v.findViewById(R.id.telefono);
         TextView genero = (TextView) v.findViewById(R.id.genero);
         TextView cedula = (TextView) v.findViewById(R.id.cedula);
+        TextView fechaCreacion = (TextView) v.findViewById(R.id.fecha_creacion);
+        TextView tiempoCreacion = (TextView) v.findViewById(R.id.tiempo_creacion);
         Button btnAceptar = (Button) v.findViewById(R.id.btn_aceptar);
         Button btnRechazar = (Button) v.findViewById(R.id.btn_rechazar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -111,23 +115,23 @@ public class ListUserAdapter extends BaseAdapter {
 
 
         if (data.get(i).getName() != null){
-            nombre.setText(data.get(i).getName().toString());
+            nombre.setText(data.get(i).getName().equals("") ? "sin nombre" : data.get(i).getName());
         }
 
         if (data.get(i).getAdress() != null){
-            direccion.setText(data.get(i).getAdress().toString());
+            direccion.setText(data.get(i).getAdress().equals("") ? "sin dirección" : data.get(i).getName());
         }
 
         if (data.get(i).getMail() != null){
-            email.setText(data.get(i).getMail().toString());
+            email.setText(data.get(i).getMail());
         }
 
         if (data.get(i).getTelephone() != null){
-            telefono.setText(data.get(i).getTelephone().toString());
+            telefono.setText(data.get(i).getCellphone());
         }
 
         if (data.get(i).getGenre() != null){
-            genero.setText(data.get(i).getGenre().toString());
+            genero.setText(data.get(i).getGenre().equals("") ? "Sin genero específico" : data.get(i).getGenre());
         }
         if (data.get(i).getIdentifycard() != null){
             cedula.setText(data.get(i).getIdentifycard());
@@ -135,7 +139,14 @@ public class ListUserAdapter extends BaseAdapter {
         textPromocion.setText(data.get(i).getPromocion() == null ? "Sin código de promocion"
         : data.get(i).getPromocion());
 
+        Date date = new Date(data.get(i).getCreado());
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MMM-dd");
+        SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss a");
 
+        if (data.get(i).getCreado() != 0) {
+            fechaCreacion.setText(formatDate.format(date));
+            tiempoCreacion.setText(formatHour.format(date));
+        }
         return v;
     }
 }

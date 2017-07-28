@@ -16,9 +16,20 @@ public class CarBorrow {
     String numberspots;
     int state;
     String userid;
+    long creado;
 
 
     //region Getters and Setter
+
+
+    public long getCreado() {
+        return creado;
+    }
+
+    public void setCreado(long creado) {
+        this.creado = creado;
+    }
+
     public String getId() {
         return id;
     }

@@ -11,7 +11,10 @@ import com.example.jhon.smiserviciostablet.Models.CarBorrow;
 import com.example.jhon.smiserviciostablet.Models.UserBorrowCar;
 import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.R;
+import com.google.android.gms.vision.text.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,6 +73,8 @@ public class ListBarBorrowAdapter extends BaseAdapter
         TextView telefono = (TextView) v.findViewById(R.id.telefono);
         TextView genero = (TextView) v.findViewById(R.id.genero);
         TextView cedula = (TextView) v.findViewById(R.id.cedula);
+        TextView fechaCreacion = (TextView) v.findViewById(R.id.fecha_creacion);
+        TextView tiempoCreacion = (TextView) v.findViewById(R.id.tiempo_creacion);
         Button btnAceptar = (Button) v.findViewById(R.id.btn_aceptar);
         Button btnRechazar = (Button) v.findViewById(R.id.btn_rechazar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -97,8 +102,17 @@ public class ListBarBorrowAdapter extends BaseAdapter
         direccion.setText(data.get(i).getCarBorrow().getDatestart());
         email.setText(data.get(i).getCarBorrow().getDatefinish());
         telefono.setText(data.get(i).getCarBorrow().getNumberspots());
-        genero.setText(data.get(i).getUsers().getGenre());
+        genero.setText(data.get(i).getUsers().getGenre().equals("") ? "Sin género definido" : data.get(i).getUsers().getGenre());
         cedula.setText(data.get(i).getUsers().getIdentifycard());
+        Date date = new Date(data.get(i).getCarBorrow().getCreado());
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MMM-dd");
+        SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss a");
+
+        if (data.get(i).getCarBorrow().getCreado() != 0){
+            fechaCreacion.setText(formatDate.format(date));
+            tiempoCreacion.setText(formatHour.format(date));
+        }
+
         textoUno.setText("Cédula");
         textoDos.setText("Descripción");
         textoTres.setText("No de Puestos");
