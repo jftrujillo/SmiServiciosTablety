@@ -119,6 +119,7 @@ public class ListBarBorrowAdapter extends BaseAdapter
         textCuatro.setText("Fecha final");
         textoCinco.setText("Fecha inicial");
         textoSeis.setText("Género");
+
         return v;
     }
 }

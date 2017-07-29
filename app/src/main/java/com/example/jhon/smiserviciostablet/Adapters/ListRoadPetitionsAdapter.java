@@ -15,6 +15,8 @@ import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.Models.driverpetitions;
 import com.example.jhon.smiserviciostablet.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,6 +74,8 @@ public class ListRoadPetitionsAdapter extends BaseAdapter{
         TextView telefono = (TextView) v.findViewById(R.id.telefono);
         TextView genero = (TextView) v.findViewById(R.id.genero);
         TextView cedula = (TextView) v.findViewById(R.id.cedula);
+        TextView fechaCreacion = (TextView) v.findViewById(R.id.fecha_creacion);
+        TextView tiempoCreacion = (TextView) v.findViewById(R.id.tiempo_creacion);
         Button btnAceptar = (Button) v.findViewById(R.id.btn_aceptar);
         Button btnRechazar = (Button) v.findViewById(R.id.btn_rechazar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -96,12 +100,22 @@ public class ListRoadPetitionsAdapter extends BaseAdapter{
         textoSeis = (TextView) v.findViewById(R.id.text6);
 
 
+
         nombre.setText(data.get(i).getRoadpetitions().getServicename());
         direccion.setText(data.get(i).getRoadpetitions().getLatitude());
         email.setText(data.get(i).getRoadpetitions().getLongitude());
         telefono.setText(data.get(i).getRoadpetitions().getRandomcode());
         genero.setText(data.get(i).getRoadpetitions().getDescription());
         cedula.setText(data.get(i).getUsers().getIdentifycard());
+
+        Date date = new Date(data.get(i).getRoadpetitions().getCreado());
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MMM-dd");
+        SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss a");
+
+        if (data.get(i).getRoadpetitions().getCreado() != 0) {
+            fechaCreacion.setText(formatDate.format(date));
+            tiempoCreacion.setText(formatHour.format(date));
+        }
 
         textoUno.setText("Cedula");
         textoDos.setText("Servicio");

@@ -12,6 +12,8 @@ import com.example.jhon.smiserviciostablet.Models.driverpetitions;
 import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,6 +70,8 @@ public class ListDriverPetitionsAdapter extends BaseAdapter {
         TextView telefono = (TextView) v.findViewById(R.id.telefono);
         TextView genero = (TextView) v.findViewById(R.id.genero);
         TextView cedula = (TextView) v.findViewById(R.id.cedula);
+        TextView fechaCreacion = (TextView) v.findViewById(R.id.fecha_creacion);
+        TextView tiempoCreacion = (TextView) v.findViewById(R.id.tiempo_creacion);
         Button btnAceptar = (Button) v.findViewById(R.id.btn_aceptar);
         Button btnRechazar = (Button) v.findViewById(R.id.btn_rechazar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +101,15 @@ public class ListDriverPetitionsAdapter extends BaseAdapter {
         telefono.setText(data.get(i).getDriverpetitions1().getDate());
         genero.setText(data.get(i).getUsers().getGenre() );
         cedula.setText(data.get(i).getUsers().getIdentifycard());
+        Date date = new Date(data.get(i).getDriverpetitions1().getCreado());
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MMM-dd");
+        SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss a");
+
+        if (data.get(i).getDriverpetitions1().getCreado() != 0) {
+            fechaCreacion.setText(formatDate.format(date));
+            tiempoCreacion.setText(formatHour.format(date));
+        }
+
         textoUno.setText("Cedula");
         textoDos.setText("Servicio");
         textoTres.setText("Fecha");

@@ -12,6 +12,8 @@ import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.R;
 import com.google.android.gms.vision.text.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,6 +70,9 @@ public class ListHomePetitionsAdapter extends BaseAdapter {
         TextView telefono = (TextView) v.findViewById(R.id.telefono);
         TextView genero = (TextView) v.findViewById(R.id.genero);
         TextView cedula = (TextView) v.findViewById(R.id.cedula);
+        TextView fechaCreacion = (TextView) v.findViewById(R.id.fecha_creacion);
+        TextView tiempoCreacion = (TextView) v.findViewById(R.id.tiempo_creacion);
+
         Button btnAceptar = (Button) v.findViewById(R.id.btn_aceptar);
         Button btnRechazar = (Button) v.findViewById(R.id.btn_rechazar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +103,15 @@ public class ListHomePetitionsAdapter extends BaseAdapter {
         telefono.setText(data.get(i).getDescription());
         genero.setText(dataUser.get(i).getName());
         cedula.setText(dataUser.get(i).getIdentifycard());
+
+        Date date = new Date(data.get(i).getCreado());
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MMM-dd");
+        SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss a");
+
+        if (data.get(i).getCreado() != 0) {
+            fechaCreacion.setText(formatDate.format(date));
+            tiempoCreacion.setText(formatHour.format(date));
+        }
 
         textoUno.setText("Cedula");
         textoDos.setText("Servicio");
