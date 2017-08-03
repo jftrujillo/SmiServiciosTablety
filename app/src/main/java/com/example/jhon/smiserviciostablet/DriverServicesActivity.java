@@ -30,6 +30,7 @@ import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import java.net.MalformedURLException;
 import java.sql.Driver;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -48,6 +49,7 @@ public class        DriverServicesActivity extends AppCompatActivity implements 
     List<DriverUserPetition> dataAdapter;
     ListDriverPetitionsAdapter adapter;
     ProgressDialog progressDialog;
+    boolean isTaken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +70,11 @@ public class        DriverServicesActivity extends AppCompatActivity implements 
             usersDao = new UsersDao(mClient,this,this);
             if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.NORMAL_INTENT) {
                 driverPetitionsDao.getAllDriverPetitions();
+                isTaken =false;
             }
             else if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.TAKEN_INTENT){
                 driverPetitionsDao.getTakenDriverPetitions();
+                isTaken = true;
             }
 
         } catch (MalformedURLException e) {
@@ -104,7 +108,7 @@ public class        DriverServicesActivity extends AppCompatActivity implements 
                 driverUser.setUsers(dataUsers.get(i));
                 dataAdapter.add(driverUser);
             }
-            adapter = new ListDriverPetitionsAdapter(dataAdapter,this,null,this);
+            adapter = new ListDriverPetitionsAdapter(dataAdapter,this,null,this,isTaken);
             listView.setAdapter(adapter);
             progressDialog.dismiss();
         }
@@ -162,6 +166,7 @@ public class        DriverServicesActivity extends AppCompatActivity implements 
                 break;
             case ListHomePetitionsAdapter.RECHAZAR:
                 data.getDriverpetitions1().setState(2);
+                data.getDriverpetitions1().setFechaaceptada(new Date().getTime());
                 driverPetitionsDao.updatePetition(data.getDriverpetitions1(),pos);
         }
 

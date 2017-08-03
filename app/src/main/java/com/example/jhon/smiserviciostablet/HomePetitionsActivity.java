@@ -26,6 +26,7 @@ import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomePetitionsActivity extends AppCompatActivity implements HomePetitionsDao.QueryInterfaceHomePetitions, QueryInterface, ListHomePetitionsAdapter.HomePetitionsInterface, UsersDao.UsersDaoUpdateInterface, HomePetitionsDao.UpdateHomePetitionsInterface, AdapterView.OnItemClickListener {
@@ -41,6 +42,7 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
     List<Homepetitions> data;
     ListHomePetitionsAdapter adapter;
     ProgressDialog progressDialog;
+    boolean isTaken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +60,11 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
             usersDao = new UsersDao(mClient,this,this);
             if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.NORMAL_INTENT) {
                 homePetitionsDao.getAllHomePetitions();
+                isTaken = false;
             }
             else if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.TAKEN_INTENT){
                 homePetitionsDao.getTakenHomePetitions();
+                isTaken = true;
             }
 
         } catch (MalformedURLException e) {
@@ -103,7 +107,7 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
             dataUsers.add(list.get(0));
         }
         if (dataUsers.size() == data.size()){
-            adapter = new ListHomePetitionsAdapter(data,this,dataUsers,this);
+            adapter = new ListHomePetitionsAdapter(data,this,dataUsers,this,isTaken);
             listView.setAdapter(adapter);
             progressDialog.dismiss();
         }
@@ -121,6 +125,7 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
             case ListHomePetitionsAdapter.RECHAZAR:
                 progressDialog = ProgressDialog.show(this,"Rechazando peticion","Por favor espere un momento",true,false);
                 homepetitions.setState(2);
+                homepetitions.setFechaaceptada(new Date().getTime());
                 homePetitionsDao.updatePetition(homepetitions);
                 Intent intent1 = new Intent(Intent.ACTION_SEND);
                 intent1.setType("message/rfc822");

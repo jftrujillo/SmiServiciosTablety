@@ -33,6 +33,7 @@ import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AddAsistenceActivity extends AppCompatActivity implements AssistantDao.QueryInterfaceAssistant, AdapterView.OnItemClickListener, HomePetitionsDao.QueryInterfaceHomePetitions, HomePetitionsDao.UpdateHomePetitionsInterface, RoadPetitionsDao.QueryInterfaceRoadPetitions, RoadPetitionsDao.UpdateRoadPetitionsInterface, DriverPetitionsDao.QueryInterfaceDriverPetitions, DriverPetitionsDao.UpdateDriverPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface, CarBorrowDao.QueryInterfaceCarBorrowPetitions, CarBorrowDao.UpdateCarBorrowPetitionsInterface {
@@ -146,6 +147,7 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
             Homepetitions homePeition = list.get(0);
             homePeition.setState(Homepetitions.PETITION_TAKEN);
             homePeition.setSupport_person(asistantId);
+            homePeition.setFechaaceptada(new Date().getTime());
             usersDao.getUserById(homePeition.getUserid());
             homePetitionsDao.updatePetition(homePeition);
 
@@ -175,6 +177,7 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
             Roadpetitions roadPetition = list.get(0);
             roadPetition.setSupport_person(asistantId);
             roadPetition.setState(Roadpetitions.PETITION_TAKEN);
+            roadPetition.setFechaaceptada(new Date().getTime());
             roadPetitionDao.updatePetition(roadPetition,0);
             usersDao.getUserById(roadPetition.getUserid());
         }
@@ -202,6 +205,7 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
             driverpetitions driver = list.get(0);
             driver.setSupport_person(asistantId);
             driver.setState(driverpetitions.PETITION_TAKEN);
+            driver.setFechaaceptada(new Date().getTime());
             driverDao.updatePetition(driver,0);
             usersDao.getUserById(driver.getUserid());
         }
@@ -256,6 +260,7 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
         if (state == HomePetitionsDao.INSERT_CORRECT){
             CarBorrow carBorrow = list.get(0);
             carBorrow.setState(Homepetitions.PETITION_TAKEN);
+            carBorrow.setFechaaceptada(new Date().getTime());
             usersDao.getUserById(carBorrow.getUserid());
             carBorrowDao.updatePetition(carBorrow,0);
 

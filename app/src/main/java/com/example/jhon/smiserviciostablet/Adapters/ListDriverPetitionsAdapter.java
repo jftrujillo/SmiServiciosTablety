@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.jhon.smiserviciostablet.Models.DriverUserPetition;
@@ -27,6 +28,7 @@ public class ListDriverPetitionsAdapter extends BaseAdapter {
     HomePetitionsInterface homePetitionsInterface;
     public static final int ACEPTAR = 0;
     public static final int RECHAZAR = 1;
+    boolean isTaken;
 
 
 
@@ -35,11 +37,12 @@ public class ListDriverPetitionsAdapter extends BaseAdapter {
     }
 
 
-    public ListDriverPetitionsAdapter(List<DriverUserPetition> data, Context context, List<Users> dataUser, HomePetitionsInterface homePetitionsInterface) {
+    public ListDriverPetitionsAdapter(List<DriverUserPetition> data, Context context, List<Users> dataUser, HomePetitionsInterface homePetitionsInterface, boolean isTaken) {
         this.data = data;
         this.context = context;
         this.dataUser = dataUser;
         this.homePetitionsInterface = homePetitionsInterface;
+        this.isTaken = isTaken;
     }
 
     @Override
@@ -72,6 +75,9 @@ public class ListDriverPetitionsAdapter extends BaseAdapter {
         TextView cedula = (TextView) v.findViewById(R.id.cedula);
         TextView fechaCreacion = (TextView) v.findViewById(R.id.fecha_creacion);
         TextView tiempoCreacion = (TextView) v.findViewById(R.id.tiempo_creacion);
+        LinearLayout linearFechaAceptada = (LinearLayout) v.findViewById(R.id.linear_fecha_aceptada);
+        TextView fechaAceptada = (TextView) v.findViewById(R.id.fecha_aceptada);
+
         Button btnAceptar = (Button) v.findViewById(R.id.btn_aceptar);
         Button btnRechazar = (Button) v.findViewById(R.id.btn_rechazar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -104,10 +110,20 @@ public class ListDriverPetitionsAdapter extends BaseAdapter {
         Date date = new Date(data.get(i).getDriverpetitions1().getCreado());
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MMM-dd");
         SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss a");
+        SimpleDateFormat formatFechaAceptada = new SimpleDateFormat("yyyy-MMM-dd HH:mm a");
+
+
 
         if (data.get(i).getDriverpetitions1().getCreado() != 0) {
             fechaCreacion.setText(formatDate.format(date));
             tiempoCreacion.setText(formatHour.format(date));
+        }
+
+        if (isTaken){
+            linearFechaAceptada.setVisibility(View.VISIBLE);
+            if (data.get(i).getDriverpetitions1().getFechaaceptada() != 0) {
+                fechaAceptada.setText(formatFechaAceptada.format(data.get(i).getDriverpetitions1().getFechaaceptada()));
+            }
         }
 
         textoUno.setText("Cedula");

@@ -34,6 +34,7 @@ import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,6 +53,7 @@ public class    RoadPetitionsAcitivity extends AppCompatActivity implements Road
     List<RoadUserPetition> dataAdapter;
     ListRoadPetitionsAdapter adapter;
     ProgressDialog progressDialog;
+    boolean isTaken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +76,11 @@ public class    RoadPetitionsAcitivity extends AppCompatActivity implements Road
             usersDao = new UsersDao(mClient,this,this);
             if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.NORMAL_INTENT) {
                 roadPetitions.getAllRoadPetitions();
+                isTaken = false;
             }
             else if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.TAKEN_INTENT  ){
                 roadPetitions.getTakenRoadPetitions();
+                isTaken = true;
             }
 
         } catch (MalformedURLException e) {
@@ -143,7 +147,7 @@ public class    RoadPetitionsAcitivity extends AppCompatActivity implements Road
                 roadUser.setUsers(dataUsers.get(i));
                 dataAdapter.add(roadUser);
             }
-            adapter = new ListRoadPetitionsAdapter(dataAdapter, this, null, this);
+            adapter = new ListRoadPetitionsAdapter(dataAdapter, this, null, this,isTaken);
             listView.setAdapter(adapter);
             progressDialog.dismiss();
         }
@@ -166,6 +170,7 @@ public class    RoadPetitionsAcitivity extends AppCompatActivity implements Road
             case ListHomePetitionsAdapter.RECHAZAR:
                 progressDialog = ProgressDialog.show(this,"Rechazando peticion","Por favor espere un momento",true,false);
                 data.getRoadpetitions().setState(2);
+                data.getRoadpetitions().setFechaaceptada(new Date().getTime());
                 roadPetitions.updatePetition(data.getRoadpetitions(),pos);
                 break;
 

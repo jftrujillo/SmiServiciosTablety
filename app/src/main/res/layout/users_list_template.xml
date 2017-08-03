@@ -238,7 +238,6 @@
                 android:focusable="false"
                 />
             <Button
-
                 android:id="@+id/btn_rechazar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -298,6 +297,29 @@
                 android:text="Tiempo no definido"
                 android:textSize="18sp"
                 android:textColor="#000000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_fecha_aceptada"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha de Aceptación"
+                android:textSize="16dp"
+                android:textColor="@color/greyButtons"
+                />
+            <TextView
+                android:id="@+id/fecha_aceptada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha no definida"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                />
         </LinearLayout>
     </TableRow>
 </TableLayout>

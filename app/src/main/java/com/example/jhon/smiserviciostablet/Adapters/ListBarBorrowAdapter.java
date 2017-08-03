@@ -5,12 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.jhon.smiserviciostablet.Models.CarBorrow;
 import com.example.jhon.smiserviciostablet.Models.UserBorrowCar;
 import com.example.jhon.smiserviciostablet.Models.Users;
 import com.example.jhon.smiserviciostablet.R;
+import com.google.android.gms.drive.query.internal.InFilter;
 import com.google.android.gms.vision.text.Text;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +32,7 @@ public class ListBarBorrowAdapter extends BaseAdapter
     CarBorrowPetitionsInterface CarBorrowPetitionsInterface;
     public static final int ACEPTAR = 0;
     public static final int RECHAZAR = 1;
+    boolean isTaken;
 
 
 
@@ -38,11 +41,12 @@ public class ListBarBorrowAdapter extends BaseAdapter
     }
 
 
-    public ListBarBorrowAdapter(List<UserBorrowCar> data, Context context, List<Users> dataUser, CarBorrowPetitionsInterface CarBorrowPetitionsInterface) {
+    public ListBarBorrowAdapter(List<UserBorrowCar> data, Context context, List<Users> dataUser, CarBorrowPetitionsInterface CarBorrowPetitionsInterface, boolean isTaken) {
         this.data = data;
         this.context = context;
         this.dataUser = dataUser;
         this.CarBorrowPetitionsInterface = CarBorrowPetitionsInterface;
+        this.isTaken = isTaken;
     }
 
     @Override
@@ -67,6 +71,8 @@ public class ListBarBorrowAdapter extends BaseAdapter
             v = View.inflate(context, R.layout.users_list_template,null);
         }
 
+
+
         TextView nombre = (TextView) v.findViewById(R.id.nombre);
         TextView direccion = (TextView) v.findViewById(R.id.direccion);
         TextView email = (TextView) v.findViewById(R.id.email);
@@ -75,6 +81,8 @@ public class ListBarBorrowAdapter extends BaseAdapter
         TextView cedula = (TextView) v.findViewById(R.id.cedula);
         TextView fechaCreacion = (TextView) v.findViewById(R.id.fecha_creacion);
         TextView tiempoCreacion = (TextView) v.findViewById(R.id.tiempo_creacion);
+        TextView fechaAceptada = (TextView) v.findViewById(R.id.fecha_aceptada);
+        LinearLayout linearFecha = (LinearLayout) v.findViewById(R.id.linear_fecha_aceptada);
         Button btnAceptar = (Button) v.findViewById(R.id.btn_aceptar);
         Button btnRechazar = (Button) v.findViewById(R.id.btn_rechazar);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +115,19 @@ public class ListBarBorrowAdapter extends BaseAdapter
         Date date = new Date(data.get(i).getCarBorrow().getCreado());
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MMM-dd");
         SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss a");
+        SimpleDateFormat formatFechaAceptada = new SimpleDateFormat("yyyy-MMM-dd HH:mm a");
+
 
         if (data.get(i).getCarBorrow().getCreado() != 0){
             fechaCreacion.setText(formatDate.format(date));
             tiempoCreacion.setText(formatHour.format(date));
+        }
+
+        if (isTaken){
+            linearFecha.setVisibility(View.VISIBLE);
+            if (data.get(i).getCarBorrow().getFechaaceptada() != 0) {
+                fechaAceptada.setText(formatFechaAceptada.format(data.get(i).getCarBorrow().getFechaaceptada()));
+            }
         }
 
         textoUno.setText("Cédula");

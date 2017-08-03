@@ -25,6 +25,7 @@ import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao.QueryInterfaceCarBorrowPetitions, CarBorrowDao.UpdateCarBorrowPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface, ListBarBorrowAdapter.CarBorrowPetitionsInterface {
@@ -40,7 +41,7 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
     List<UserBorrowCar> dataAdapter;
     ListBarBorrowAdapter adapter;
     ProgressDialog progressDialog;
-
+    boolean isTaken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +62,11 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
             usersDao = new UsersDao(mClient,this,this);
             if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.NORMAL_INTENT) {
                 carBorrowDao.getAllCarBorrowPetitions();
+                isTaken = false;
             }
             else if (getIntent().getExtras().getInt(DashboardActivity.KIND_PETITION) == DashboardActivity.TAKEN_INTENT){
                 carBorrowDao.getTakenCarBorrowPetitions();
+                isTaken = true;
             }
 
         } catch (MalformedURLException e) {
@@ -130,7 +133,7 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
                 userBorrowCar.setUsers(dataUsers.get(i));
                 dataAdapter.add(userBorrowCar);
             }
-            adapter = new ListBarBorrowAdapter(dataAdapter,this,null,this);
+            adapter = new ListBarBorrowAdapter(dataAdapter,this,null,this,isTaken);
             listView.setAdapter(adapter);
             progressDialog.dismiss();
         }
@@ -151,6 +154,7 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
                 startActivity(intent);
                 */
                 data.getCarBorrow().setState(1);
+                data.getCarBorrow().setFechaaceptada(new Date().getTime());
                 carBorrowDao.updatePetition(data.getCarBorrow(),pos);
                 break;
             case ListHomePetitionsAdapter.RECHAZAR:
