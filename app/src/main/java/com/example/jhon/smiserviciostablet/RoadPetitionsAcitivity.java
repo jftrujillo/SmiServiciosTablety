@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -39,7 +40,7 @@ import java.util.List;
 
 
 
-public class    RoadPetitionsAcitivity extends AppCompatActivity implements RoadPetitionsDao.QueryInterfaceRoadPetitions, RoadPetitionsDao.UpdateRoadPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface, ListRoadPetitionsAdapter.RoadpetitionsInterface, AdapterView.OnItemClickListener {
+public class RoadPetitionsAcitivity extends AppCompatActivity implements RoadPetitionsDao.QueryInterfaceRoadPetitions, RoadPetitionsDao.UpdateRoadPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface, ListRoadPetitionsAdapter.RoadpetitionsInterface, AdapterView.OnItemClickListener {
     Toolbar toobar;
     CollapsingToolbarLayout collapse;
     ListView listView;
@@ -180,5 +181,15 @@ public class    RoadPetitionsAcitivity extends AppCompatActivity implements Road
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         startActivity(new Intent(this,RoadPetitionDetailActivity.class).putExtra(Constants.ID_PETITION,data.get(position).getId()).putExtra(Constants.ID_USER,dataUsers.get(position).getId()));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return  true;
     }
 }

@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -78,9 +79,9 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
         listView = (ListView) findViewById(R.id.list_view);
         setSupportActionBar(toobar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Peticiones de Prestamo de vehiculo");
+        getSupportActionBar().setTitle("Peticiones de alquiler de vehículo");
         collapse = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapse.setTitle("Peticiones de Prestamo de vehiculo");
+        collapse.setTitle("Peticiones de alquiler de vehículo");
         collapse.setExpandedTitleColor(getResources().getColor(android.R.color.black));
 
     }
@@ -161,5 +162,15 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
                 data.getCarBorrow().setState(2);
                 carBorrowDao.updatePetition(data.getCarBorrow(),pos);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return  true;
     }
 }

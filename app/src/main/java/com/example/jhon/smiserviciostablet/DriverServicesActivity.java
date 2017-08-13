@@ -35,7 +35,7 @@ import java.util.List;
 
 
 
-public class        DriverServicesActivity extends AppCompatActivity implements QueryInterface, DriverPetitionsDao.QueryInterfaceDriverPetitions, DriverPetitionsDao.UpdateDriverPetitionsInterface, UsersDao.UsersDaoUpdateInterface, ListDriverPetitionsAdapter.HomePetitionsInterface, AdapterView.OnItemClickListener {
+public class DriverServicesActivity extends AppCompatActivity implements QueryInterface, DriverPetitionsDao.QueryInterfaceDriverPetitions, DriverPetitionsDao.UpdateDriverPetitionsInterface, UsersDao.UsersDaoUpdateInterface, ListDriverPetitionsAdapter.HomePetitionsInterface, AdapterView.OnItemClickListener {
     Toolbar toobar;
     CollapsingToolbarLayout collapse;
     ListView listView;

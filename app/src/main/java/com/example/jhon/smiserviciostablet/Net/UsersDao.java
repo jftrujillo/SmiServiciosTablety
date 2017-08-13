@@ -7,6 +7,7 @@ import com.example.jhon.smiserviciostablet.Models.Users;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+import com.microsoft.windowsazure.mobileservices.table.query.QueryOrder;
 
 import java.util.concurrent.ExecutionException;
 
@@ -42,7 +43,7 @@ public class UsersDao  {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    mList = mTable.where().field("isvalid").eq(0).execute().get();
+                    mList = mTable.where().field("isvalid").eq(0).orderBy("__createdAt",QueryOrder.Descending).execute().get();
                 } catch (InterruptedException e) {
                     queryInterface.OnQueryFinish(INSERT_FAILED,null);
                     e.printStackTrace();
@@ -66,7 +67,7 @@ public class UsersDao  {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    mList = mTable.where().field("isvalid").eq(0).or().field("isvalid").eq(1).execute().get();
+                    mList = mTable.where().field("isvalid").eq(0).or().field("isvalid").eq(1).orderBy("__createdAt",QueryOrder.Descending).execute().get();
                 } catch (InterruptedException e) {
                     queryInterface.OnQueryFinish(INSERT_FAILED,null);
                     e.printStackTrace();

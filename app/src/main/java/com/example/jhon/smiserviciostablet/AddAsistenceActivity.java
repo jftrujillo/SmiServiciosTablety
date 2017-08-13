@@ -234,10 +234,10 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
             i.setType("message/rfc822");
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{list.get(0).getMail()});
             i.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Aceptado");
-            i.putExtra(Intent.EXTRA_TEXT   , "su solicitud ha sido aceptada, muchas gracias por preferirnos " +
-                    " En minutos llegara alguien  para ayudarlo. El nombre de el encargado a atender " +
-                    "su solicitud es " + assistant.getName() + "identificado con numero de cedula: " + assistant.getIdentifycard()+
-                    " Se envia fotografia del asistente " + assistant.getUrlimg());
+            i.putExtra(Intent.EXTRA_TEXT   , "Su solicitud ha sido aceptada, muchas gracias por preferirnos. " +
+                    "En minutos llegara alguien  para ayudarlo. El nombre de el encargado que atendera " +
+                    "su solicitud es " + assistant.getName() + " identificado con numero de cedula: " + assistant.getIdentifycard()+
+                    " se envia fotografia del asistente " + assistant.getUrlimg());
             try {
                 startActivity(Intent.createChooser(i, "Creando correo electronico..."));
             } catch (android.content.ActivityNotFoundException ex) {

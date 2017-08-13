@@ -110,4 +110,6 @@ public class HomePetiitionsDetail extends AppCompatActivity implements QueryInte
     public void OnUserUpdate(int type, int state, String e, Users users) {
 
     }
+
+
 }

@@ -286,7 +286,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha de creación"
+                android:text="Hora de creación"
                 android:textColor="@color/greyButtons"
                 android:textSize="16sp"
                 />
@@ -308,7 +308,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha de Aceptación"
+                android:text="Fecha/hora de Aceptación"
                 android:textSize="16dp"
                 android:textColor="@color/greyButtons"
                 />

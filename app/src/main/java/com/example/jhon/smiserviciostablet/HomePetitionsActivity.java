@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -86,6 +87,17 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+        }
+        return true;
 
     }
 
@@ -102,9 +114,10 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
 
     @Override
     public void OnQueryFinish(int state, MobileServiceList<Users> list) {
-        progressDialog.dismiss();
         if (list.size() > 0) {
             dataUsers.add(list.get(0));
+        } else {
+            progressDialog.dismiss();
         }
         if (dataUsers.size() == data.size()){
             adapter = new ListHomePetitionsAdapter(data,this,dataUsers,this,isTaken);
@@ -163,4 +176,6 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
         Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(HomePetitionsActivity.this,HomePetiitionsDetail.class).putExtra(Constants.ID_PETITION,data.get(position).getId()).putExtra(Constants.ID_USER,dataUsers.get(position).getId()));
     }
+
+
 }

@@ -136,7 +136,7 @@ public class ListRoadPetitionsAdapter extends BaseAdapter{
         textoTres.setText("Codigo aleatorio");
         textCuatro.setText("Longitud");
         textoCinco.setText("Latitud");
-        textoSeis.setText("Género");
+        textoSeis.setText("Descripción");
         return v;
     }
 }

@@ -76,6 +76,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/password"
                         android:gravity="center"
+                        android:inputType="textPassword"
                         />
 
 
@@ -84,14 +85,13 @@
                 <Button
                     android:id="@+id/login_login"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="Acceder"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:background="@color/greyButtons"
                     android:textColor="#ffffff"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/top_button_login"
-                    android:inputType="textPassword"
                     />
 
 

@@ -110,4 +110,6 @@ public class RoadPetitionDetailActivity extends AppCompatActivity implements Roa
     public void OnUserUpdate(int type, int state, String e, Users users) {
 
     }
+
+
 }
