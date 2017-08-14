@@ -126,7 +126,7 @@ public class ListDriverPetitionsAdapter extends BaseAdapter {
             }
         }
 
-        textoUno.setText("Cedula");
+        textoUno.setText("Cédula");
         textoDos.setText("Servicio");
         textoTres.setText("Fecha");
         textCuatro.setText("Dirección inicial");

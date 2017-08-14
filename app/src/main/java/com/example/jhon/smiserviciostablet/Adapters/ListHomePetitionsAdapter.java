@@ -127,11 +127,11 @@ public class ListHomePetitionsAdapter extends BaseAdapter {
             }
         }
 
-        textoUno.setText("Cedula");
+        textoUno.setText("Cédula");
         textoDos.setText("Servicio");
         textoTres.setText("Descripción");
         textCuatro.setText("Codigo Aleatorio");
-        textoCinco.setText("Direección");
+        textoCinco.setText("Dirección");
         textoSeis.setText("Nombre");
         return v;
     }

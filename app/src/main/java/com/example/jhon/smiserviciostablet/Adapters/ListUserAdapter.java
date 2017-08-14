@@ -105,7 +105,7 @@ public class ListUserAdapter extends BaseAdapter {
         textoCinco = (TextView) v.findViewById(R.id.text5);
         textoSeis = (TextView) v.findViewById(R.id.text6);
 
-        textoUno.setText("Cedula");
+        textoUno.setText("Cédula");
         textoDos.setText("Nombre");
         textoTres.setText("Teléfono");
         textCuatro.setText("Correo electrónico");

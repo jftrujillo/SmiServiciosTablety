@@ -131,7 +131,7 @@ public class ListRoadPetitionsAdapter extends BaseAdapter{
             }
         }
 
-        textoUno.setText("Cedula");
+        textoUno.setText("Cédula");
         textoDos.setText("Servicio");
         textoTres.setText("Codigo aleatorio");
         textCuatro.setText("Longitud");

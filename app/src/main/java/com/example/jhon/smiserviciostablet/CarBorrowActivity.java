@@ -20,6 +20,7 @@ import com.example.jhon.smiserviciostablet.Net.CarBorrowDao;
 import com.example.jhon.smiserviciostablet.Net.HomePetitionsDao;
 import com.example.jhon.smiserviciostablet.Net.UsersDao;
 import com.example.jhon.smiserviciostablet.Util.Constants;
+import com.google.android.gms.drive.query.internal.InFilter;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
@@ -98,21 +99,40 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
     }
 
     @Override
-    public void OnUpdateFinishCarBorrow(int state, String e, CarBorrow carBorrow, int i) {
+    public void OnUpdateFinishCarBorrow(int state, String e, CarBorrow carBorrow, int i, int type) {
         if (state == HomePetitionsDao.INSERT_CORRECT){
-            progressDialog.dismiss();
-            dataAdapter.remove(i);
-            adapter.notifyDataSetChanged();
-            progressDialog.dismiss();
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("message/rfc822");
-            intent.putExtra(Intent.EXTRA_EMAIL  , new String[]{dataUsers.get(i).getMail()});
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Rechazada");
-            intent.putExtra(Intent.EXTRA_TEXT   , Constants.REFUSE_EMAIL);
-            try {
-                startActivity(Intent.createChooser(intent, "Send mail..."));
-            } catch (android.content.ActivityNotFoundException ex) {
-                Toast.makeText(this, "No hay clientes de correo, por favor instale uno.", Toast.LENGTH_SHORT).show();
+            if (type == CarBorrowDao.RECHAZAR) {
+
+                progressDialog.dismiss();
+                dataAdapter.remove(i);
+                adapter.notifyDataSetChanged();
+                progressDialog.dismiss();
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{dataUsers.get(i).getMail()});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Rechazada");
+                intent.putExtra(Intent.EXTRA_TEXT, Constants.REFUSE_EMAIL);
+                try {
+                    startActivity(Intent.createChooser(intent, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, "No hay clientes de correo, por favor instale uno.", Toast.LENGTH_SHORT).show();
+                }
+            }
+            if (type == CarBorrowDao.ACEPTAR) {
+                progressDialog.dismiss();
+                dataAdapter.remove(i);
+                adapter.notifyDataSetChanged();
+                progressDialog.dismiss();
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{dataUsers.get(i).getMail()});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Aceptada");
+                intent.putExtra(Intent.EXTRA_TEXT, "Muchas gracias por usar nuestra aplicación. En un momento nos comunicaremos con usted para confirmar el alquiler del vehiculo");
+                try {
+                    startActivity(Intent.createChooser(intent, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, "No hay clientes de correo, por favor instale uno.", Toast.LENGTH_SHORT).show();
+                }
             }
 
         }
@@ -156,11 +176,12 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
                 */
                 data.getCarBorrow().setState(1);
                 data.getCarBorrow().setFechaaceptada(new Date().getTime());
-                carBorrowDao.updatePetition(data.getCarBorrow(),pos);
+                carBorrowDao.updatePetition(data.getCarBorrow(),pos,CarBorrowDao.ACEPTAR);
                 break;
             case ListHomePetitionsAdapter.RECHAZAR:
                 data.getCarBorrow().setState(2);
-                carBorrowDao.updatePetition(data.getCarBorrow(),pos);
+                data.getCarBorrow().setFechaaceptada(new Date().getTime());
+                carBorrowDao.updatePetition(data.getCarBorrow(),pos,CarBorrowDao.RECHAZAR);
         }
     }
 

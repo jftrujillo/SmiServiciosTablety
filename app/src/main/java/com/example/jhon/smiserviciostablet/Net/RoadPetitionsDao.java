@@ -7,6 +7,7 @@ import com.example.jhon.smiserviciostablet.Models.driverpetitions;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+import com.microsoft.windowsazure.mobileservices.table.query.QueryOrder;
 
 import java.util.concurrent.ExecutionException;
 
@@ -44,7 +45,7 @@ public class RoadPetitionsDao {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    mList = mTable.where().field("state").eq(0).execute().get();
+                    mList = mTable.where().field("state").eq(0).orderBy("__createdAt", QueryOrder.Descending).execute().get();
                 } catch (InterruptedException e) {
                     queryInterfaceRoadPetitions.OnQueryFinishRoad(INSERT_FAILED, null);
                     e.printStackTrace();
@@ -68,7 +69,7 @@ public class RoadPetitionsDao {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    mList = mTable.where().field("state").eq(1).execute().get();
+                    mList = mTable.where().field("state").eq(1).orderBy("__createdAt",QueryOrder.Descending).execute().get();
                 } catch (InterruptedException e) {
                     queryInterfaceRoadPetitions.OnQueryFinishRoad(INSERT_FAILED, null);
                     e.printStackTrace();

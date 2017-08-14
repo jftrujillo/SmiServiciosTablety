@@ -42,6 +42,89 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Nombre Cliente"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:id="@+id/nombre_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1422"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Teléfono"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:id="@+id/telefono_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1422"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cédula"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:focusable="false"
+                android:id="@+id/cedula_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1422"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Correo Electronico"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:textColor="@color/greenletter"
+                />
+            <EditText
+                android:inputType="none"
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1422"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/blackSmi"
+                android:clickable="false"
+                android:focusable="false"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Nombre del servicio"
                 android:textSize="22sp"
                 android:layout_margin="8dp"
@@ -156,67 +239,6 @@
                 android:clickable="false"
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nombre Cliente"
-                android:textSize="22sp"
-                android:layout_margin="8dp"
-                android:textColor="@color/greenletter"
-                />
-            <EditText
-                android:inputType="none"
-                android:id="@+id/nombre_cliente"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="1422"
-                android:layout_margin="8dp"
-                android:textSize="22sp"
-                android:textColor="@color/blackSmi"
-                android:clickable="false"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cedula"
-                android:textSize="22sp"
-                android:layout_margin="8dp"
-                android:textColor="@color/greenletter"
-                />
-            <EditText
-                android:inputType="none"
-                android:focusable="false"
-                android:id="@+id/cedula_cliente"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="1422"
-                android:layout_margin="8dp"
-                android:textSize="22sp"
-                android:textColor="@color/blackSmi"
-                android:clickable="false"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Correo Electronico"
-                android:textSize="22sp"
-                android:layout_margin="8dp"
-                android:textColor="@color/greenletter"
-                />
-            <EditText
-                android:inputType="none"
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="1422"
-                android:layout_margin="8dp"
-                android:textSize="22sp"
-                android:textColor="@color/blackSmi"
-                android:clickable="false"
-                android:focusable="false"
-                />
 
         </LinearLayout>
     </ScrollView>

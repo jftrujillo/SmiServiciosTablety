@@ -235,8 +235,8 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{list.get(0).getMail()});
             i.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Aceptado");
             i.putExtra(Intent.EXTRA_TEXT   , "Su solicitud ha sido aceptada, muchas gracias por preferirnos. " +
-                    "En minutos llegara alguien  para ayudarlo. El nombre de el encargado que atendera " +
-                    "su solicitud es " + assistant.getName() + " identificado con numero de cedula: " + assistant.getIdentifycard()+
+                    "En minutos llegará alguien  para ayudarlo. El nombre de el encargado que atenderá " +
+                    "su solicitud es " + assistant.getName() + " identificado con numero de cédula: " + assistant.getIdentifycard()+
                     " se envia fotografia del asistente " + assistant.getUrlimg());
             try {
                 startActivity(Intent.createChooser(i, "Creando correo electronico..."));
@@ -262,7 +262,7 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
             carBorrow.setState(Homepetitions.PETITION_TAKEN);
             carBorrow.setFechaaceptada(new Date().getTime());
             usersDao.getUserById(carBorrow.getUserid());
-            carBorrowDao.updatePetition(carBorrow,0);
+            carBorrowDao.updatePetition(carBorrow,0,0);
 
         }
         else {
@@ -271,8 +271,9 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
         }
     }
 
+
     @Override
-    public void OnUpdateFinishCarBorrow(int state, String e, CarBorrow carBorrow, int i) {
+    public void OnUpdateFinishCarBorrow(int state, String e, CarBorrow carBorrow, int i, int type) {
         if (state == RoadPetitionsDao.INSERT_CORRECT){
             Toast.makeText(AddAsistenceActivity.this, "Se asigno con exito el asistente", Toast.LENGTH_SHORT).show();
 //            progressDialog.dismiss();

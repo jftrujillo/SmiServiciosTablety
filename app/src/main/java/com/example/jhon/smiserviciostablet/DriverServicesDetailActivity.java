@@ -24,7 +24,7 @@ import java.net.MalformedURLException;
 
 public class DriverServicesDetailActivity extends AppCompatActivity implements DriverPetitionsDao.QueryInterfaceDriverPetitions, DriverPetitionsDao.UpdateDriverPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface {
     Toolbar toolbar;
-    EditText nombreServicio,direccion,descrpipcion,codigoAleatorio, nombreCliente, cedula, email;
+    EditText nombreServicio,direccion,descrpipcion,codigoAleatorio, nombreCliente, cedula, email,telefono;
     RadioButton hombre,mujer;
     Bundle bundle;
     MobileServiceClient mClient;
@@ -66,6 +66,8 @@ public class DriverServicesDetailActivity extends AppCompatActivity implements D
         email = (EditText) findViewById(R.id.email);
         hombre = (RadioButton) findViewById(R.id.hombre);
         mujer = (RadioButton) findViewById(R.id.mujer);
+        telefono = (EditText) findViewById(R.id.telefono_cliente);
+
     }
 
     @Override
@@ -88,6 +90,7 @@ public class DriverServicesDetailActivity extends AppCompatActivity implements D
         nombreCliente.setText(users.getName());
         cedula.setText(users.getIdentifycard());
         email.setText(users.getMail());
+        telefono.setText(users.getCellphone());
         if (users.getGenre().equals("Mujer")){
             mujer.setChecked(true);
         }

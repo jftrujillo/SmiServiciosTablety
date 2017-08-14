@@ -7,6 +7,7 @@ import com.example.jhon.smiserviciostablet.Models.driverpetitions;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+import com.microsoft.windowsazure.mobileservices.table.query.QueryOrder;
 
 import java.util.concurrent.ExecutionException;
 
@@ -18,6 +19,8 @@ public class CarBorrowDao {
 
     public static final int INSERT_CORRECT = 0;
     public static final int INSERT_FAILED = 1;
+    public static final int ACEPTAR = 0;
+    public static final int RECHAZAR = 1;
 
     MobileServiceClient mClient;
     MobileServiceTable<CarBorrow> mTable;
@@ -32,7 +35,7 @@ public class CarBorrowDao {
 
 
     public interface UpdateCarBorrowPetitionsInterface {
-        void OnUpdateFinishCarBorrow(int state, String e, CarBorrow carBorrow, int i);
+        void OnUpdateFinishCarBorrow(int state, String e, CarBorrow carBorrow, int i, int type);
     }
 
     public CarBorrowDao(MobileServiceClient mClient, QueryInterfaceCarBorrowPetitions queryInterfaceCarBorrowPetitions, UpdateCarBorrowPetitionsInterface updateDriverPetitionsInterface) {
@@ -47,7 +50,7 @@ public class CarBorrowDao {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    mList = mTable.where().field("state").eq(0).execute().get();
+                    mList = mTable.where().field("state").eq(0).orderBy("__createdAt", QueryOrder.Descending).execute().get();
                 } catch (InterruptedException e) {
                     queryInterfaceCarBorrowPetitions.OnQueryFinishCarBorrow(INSERT_FAILED, null);
                     e.printStackTrace();
@@ -71,7 +74,7 @@ public class CarBorrowDao {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    mList = mTable.where().field("state").eq(1).execute().get();
+                    mList = mTable.where().field("state").eq(1).orderBy("__createdAt",QueryOrder.Descending).execute().get();
                 } catch (InterruptedException e) {
                     queryInterfaceCarBorrowPetitions.OnQueryFinishCarBorrow(INSERT_FAILED, null);
                     e.printStackTrace();
@@ -116,7 +119,7 @@ public class CarBorrowDao {
 
     }
 
-    public void updatePetition(final CarBorrow carBorrow2,final int pos) {
+    public void updatePetition(final CarBorrow carBorrow2, final int pos, final int type) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -124,10 +127,10 @@ public class CarBorrowDao {
                     carBorrow = mTable.update(carBorrow2).get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_FAILED, e.toString(), null, pos);
+                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_FAILED, e.toString(), null, pos,type);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_FAILED, e.toString(), null, pos);
+                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_FAILED, e.toString(), null, pos,type);
                 }
                 return null;
             }
@@ -136,13 +139,13 @@ public class CarBorrowDao {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 if (carBorrow.getState() == 1) {
-                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_CORRECT, null, carBorrow, pos);
+                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_CORRECT, null, carBorrow, pos,type);
                 } else if (carBorrow.getState() == 2) {
-                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_FAILED, "fallo", null, pos);
+                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_CORRECT, null, carBorrow, pos,type);
                 }
 
                 if (carBorrow.getState() == 0) {
-                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_FAILED, "fallo", null, pos);
+                    updateDriverPetitionsInterface.OnUpdateFinishCarBorrow(INSERT_FAILED, "fallo", null, pos,type);
                 }
 
 
