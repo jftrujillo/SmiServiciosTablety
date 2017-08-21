@@ -31,7 +31,7 @@ public class Constants {
     public static final String ID_PETITION = "idPetition";
     public static final String ID_USER = "iduser";
     public static final String EMAIL_USER = "emailUser";
-    public static final String REFUSE_EMAIL = "Le agradecemos por utilizar nuestra aplicación. El informamos que su solicitud ha sido rechazada. Gracias";
+    public static final String REFUSE_EMAIL = "Le agradecemos por utilizar nuestra aplicación. Le informamos que su solicitud ha sido rechazada. Gracias";
     public static final String IS_ALL_USERS = "is_all_users";
 
 
