@@ -50,7 +50,7 @@ public class HomePetitionsActivity extends AppCompatActivity implements HomePeti
         setContentView(R.layout.activity_home_petitions);
         data = new ArrayList<>();
         dataUsers = new ArrayList<>();
-        progressDialog = ProgressDialog.show(this,"Sincronizando informacion","Por favor espere",true,false);
+        progressDialog = ProgressDialog.show(this,"Sincronizando información","Por favor espere",true,false);
         try {
             mClient = new MobileServiceClient("https://smiserviciosmovil.azure-mobile.net/",
                     "qIufyUhXNGYkLUXenUUDufQFPMdcUm65",

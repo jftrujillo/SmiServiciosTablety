@@ -49,7 +49,7 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_borrow);
-        progressDialog = ProgressDialog.show(this,"Sincronizando informacion","Por favor espere",true,false);
+        progressDialog = ProgressDialog.show(this,"Sincronizando información","Por favor espere",true,false);
         data = new ArrayList<>();
         dataUsers = new ArrayList<>();
         dataAdapter = new ArrayList<>();

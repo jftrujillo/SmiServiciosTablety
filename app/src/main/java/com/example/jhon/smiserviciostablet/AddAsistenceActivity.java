@@ -190,7 +190,7 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
     @Override
     public void OnUpdateFinishRoad(int state, String e, Roadpetitions roadpetitions, int i) {
         if (state == RoadPetitionsDao.INSERT_CORRECT){
-            Toast.makeText(AddAsistenceActivity.this, "Se asigno con exito el asistente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddAsistenceActivity.this, "Se asignó con éxito el asistente", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
         else {
@@ -218,7 +218,7 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
     @Override
     public void OnUpdateFinishDriver(int state, String e, driverpetitions homepetitions, int i) {
         if (state == RoadPetitionsDao.INSERT_CORRECT){
-            Toast.makeText(AddAsistenceActivity.this, "Se asigno con exito el asistente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddAsistenceActivity.this, "Se asignó con éxito el asistente", Toast.LENGTH_SHORT).show();
 //            progressDialog.dismiss();
         }
         else {
@@ -235,17 +235,17 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{list.get(0).getMail()});
             i.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Aceptado");
             i.putExtra(Intent.EXTRA_TEXT   , "Su solicitud ha sido aceptada, muchas gracias por preferirnos. " +
-                    "En minutos llegará alguien  para ayudarlo. El nombre de el encargado que atenderá " +
-                    "su solicitud es " + assistant.getName() + " identificado con numero de cédula: " + assistant.getIdentifycard()+
-                    " se envia fotografia del asistente " + assistant.getUrlimg());
+                    "En minutos llegará alguien  para ayudarlo. El nombre del encargado que atenderá " +
+                    "su solicitud es " + assistant.getName() + " identificado con número de cédula: " + assistant.getIdentifycard()+
+                    " se envía fotografía del asistente " + assistant.getUrlimg());
             try {
-                startActivity(Intent.createChooser(i, "Creando correo electronico..."));
+                startActivity(Intent.createChooser(i, "Creando correo electrónico..."));
             } catch (android.content.ActivityNotFoundException ex) {
                 Toast.makeText(this, "No hay clientes de correo, por favor instale uno.", Toast.LENGTH_SHORT).show();
             }
         }
         else {
-            Toast.makeText(this, "No hay usuarios ligado a esta solicitud", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No hay usuarios ligados a esta solicitud", Toast.LENGTH_SHORT).show();
         }
         finish();
     }
@@ -275,7 +275,7 @@ public class AddAsistenceActivity extends AppCompatActivity implements Assistant
     @Override
     public void OnUpdateFinishCarBorrow(int state, String e, CarBorrow carBorrow, int i, int type) {
         if (state == RoadPetitionsDao.INSERT_CORRECT){
-            Toast.makeText(AddAsistenceActivity.this, "Se asigno con exito el asistente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddAsistenceActivity.this, "Se asignó con éxito el asistente", Toast.LENGTH_SHORT).show();
 //            progressDialog.dismiss();
         }
         else {
