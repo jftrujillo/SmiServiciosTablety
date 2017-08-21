@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao.QueryInterfaceCarBorrowPetitions, CarBorrowDao.UpdateCarBorrowPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface, ListBarBorrowAdapter.CarBorrowPetitionsInterface {
+public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao.QueryInterfaceCarBorrowPetitions, CarBorrowDao.UpdateCarBorrowPetitionsInterface, QueryInterface, UsersDao.UsersDaoUpdateInterface, ListBarBorrowAdapter.CarBorrowPetitionsInterface, AdapterView.OnItemClickListener {
     Toolbar toobar;
     CollapsingToolbarLayout collapse;
     ListView listView;
@@ -49,7 +51,7 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_borrow);
-        progressDialog = ProgressDialog.show(this,"Sincronizando informacion","Por favor espere",true,false);
+        progressDialog = ProgressDialog.show(this,"Sincronizando información","Por favor espere",true,false);
         data = new ArrayList<>();
         dataUsers = new ArrayList<>();
         dataAdapter = new ArrayList<>();
@@ -78,6 +80,7 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
 
         toobar = (Toolbar) findViewById(R.id.toolbar);
         listView = (ListView) findViewById(R.id.list_view);
+        listView.setOnItemClickListener(this);
         setSupportActionBar(toobar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Peticiones de alquiler de vehículo");
@@ -127,7 +130,7 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
                 intent.setType("message/rfc822");
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{dataUsers.get(i).getMail()});
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de SMI Servicios: Aceptada");
-                intent.putExtra(Intent.EXTRA_TEXT, "Muchas gracias por usar nuestra aplicación. En un momento nos comunicaremos con usted para confirmar el alquiler del vehiculo");
+                intent.putExtra(Intent.EXTRA_TEXT, "Muchas gracias por usar nuestra aplicación. En un momento nos comunicaremos con usted para confirmar el alquiler del vehículo");
                 try {
                     startActivity(Intent.createChooser(intent, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
@@ -137,7 +140,7 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
 
         }
         else {
-            Toast.makeText(this, "Error al actualizar la peticion", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al actualizar la petición", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
     }
@@ -193,5 +196,10 @@ public class CarBorrowActivity extends AppCompatActivity implements CarBorrowDao
                 break;
         }
         return  true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(new Intent(CarBorrowActivity.this,CarBorrowDetailActtivity.class).putExtra(Constants.ID_PETITION,data.get(position).getId()).putExtra(Constants.ID_USER,dataUsers.get(position).getId()));
     }
 }
